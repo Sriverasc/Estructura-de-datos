@@ -38,21 +38,21 @@ int guardarEnNodoS(struct NodoS* temp, enum Tipo tipo, void *dato) {
     {
     case Int:
         temp->dato = malloc(sizeof(int));
-        if (temp->dato) return -1;
+        if (!temp->dato) return -1;
         memcpy(temp->dato, dato, sizeof(int));
         break;
     case Char:
         temp->dato = malloc(sizeof(char));
-        if (temp->dato) return -1;
+        if (!temp->dato) return -1;
         memcpy(temp->dato, dato, sizeof(char));
         break;
     case Float: 
         temp->dato = malloc(sizeof(float));
-        if (temp->dato) return -1;
+        if (!temp->dato) return -1;
         memcpy(temp->dato, dato, sizeof(float));
     case Double:
         temp->dato = malloc(sizeof(double));
-        if (temp->dato) return -1;
+        if (!temp->dato) return -1;
         memcpy(temp->dato, dato, sizeof(double));
         break;
     default:
@@ -68,21 +68,21 @@ int guardarEnNodoD(struct NodoD* temp, enum Tipo tipo, void *dato) {
     {
     case Int:
         temp->dato = malloc(sizeof(int));
-        if (temp->dato) return -1;
+        if (!temp->dato) return -1;
         memcpy(temp->dato, dato, sizeof(int));
         break;
     case Char:
         temp->dato = malloc(sizeof(char));
-        if (temp->dato) return -1;
+        if (!temp->dato) return -1;
         memcpy(temp->dato, dato, sizeof(char));
         break;
     case Float: 
         temp->dato = malloc(sizeof(float));
-        if (temp->dato) return -1;
+        if (!temp->dato) return -1;
         memcpy(temp->dato, dato, sizeof(float));
     case Double:
         temp->dato = malloc(sizeof(double));
-        if (temp->dato) return -1;
+        if (!temp->dato) return -1;
         memcpy(temp->dato, dato, sizeof(double));
         break;
     default:
