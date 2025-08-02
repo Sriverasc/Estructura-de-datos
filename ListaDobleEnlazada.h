@@ -57,12 +57,13 @@ int enlistarListaDobleFinal(struct ListaDobleEnlazada* lista, void* valor) {
 
     int res = 0;
     struct NodoD* nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
+    if (!nodo) return -3;
 
     res = guardarValor(nodo, 2, lista->tipo, valor);
 
     if (res != 1) {
         printf("Error al guardar el dato: %d", res);
-        return -1;
+        return -4;
     }
 
     nodo->siguiente = lista->frente;
@@ -72,6 +73,46 @@ int enlistarListaDobleFinal(struct ListaDobleEnlazada* lista, void* valor) {
     lista->frente->anterior = nodo;
 
     lista->final = nodo;
+
+    return 1;
+}
+
+int enlistarListaDobleEn(struct ListaDobleEnlazada* lista, void* valor, int posicion) {
+    if (!lista) return -1;
+    if (!valor) return -2;
+    if (posicion < 0) return -3;
+    if (!lista->frente || posicion == 0) return enlistarListaDobleInicio(lista, valor);
+
+    int res = 0, i= 0;
+    struct NodoD* tempA;
+    struct NodoD* tempS;
+    struct NodoD* nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
+    if (!nodo) return -4;
+
+    res = guardarValor(nodo, 2, lista->tipo, valor);
+    
+    if (res != 1) {
+        printf("Error al guardar el dato: %d\n", res);
+        return -5;
+    }
+
+    tempA = lista->frente;
+    while (i < (posicion - 1) && tempA->siguiente != lista->frente) {
+        i++;
+        tempA = tempA->siguiente;
+    }
+
+    tempS = tempA->siguiente;
+
+    nodo->siguiente = tempS;
+    nodo->anterior = tempA;
+
+    tempS->anterior = nodo;
+    tempA->siguiente = nodo;
+
+    if (nodo->siguiente == lista->frente) {
+        lista->final = nodo;
+    }
 
     return 1;
 }
