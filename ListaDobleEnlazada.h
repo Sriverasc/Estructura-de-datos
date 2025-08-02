@@ -18,7 +18,7 @@ struct ListaDobleEnlazada* iniciarListaDobleEnlazada(enum Tipo tipo) {
 
 int enlistarListaDobleInicio(struct ListaDobleEnlazada* lista, void* valor) {
     if (!lista) return -1;
-    if (!valor) return -2;
+    else if (!valor) return -2;
 
     int res = 0;
     struct NodoD* nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
@@ -51,9 +51,9 @@ int enlistarListaDobleInicio(struct ListaDobleEnlazada* lista, void* valor) {
 }
 
 int enlistarListaDobleFinal(struct ListaDobleEnlazada* lista, void* valor) {
-    if (!lista) return -1;
-    if (!valor) return -2;
     if (!lista->frente) return enlistarListaDobleInicio(lista, valor);
+    else if (!lista) return -1;
+    else if (!valor) return -2;
 
     int res = 0;
     struct NodoD* nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
@@ -78,10 +78,10 @@ int enlistarListaDobleFinal(struct ListaDobleEnlazada* lista, void* valor) {
 }
 
 int enlistarListaDobleEn(struct ListaDobleEnlazada* lista, void* valor, int posicion) {
-    if (!lista) return -1;
-    if (!valor) return -2;
-    if (posicion < 0) return -3;
     if (!lista->frente || posicion == 0) return enlistarListaDobleInicio(lista, valor);
+    else if (!lista) return -1;
+    else if (!valor) return -2;
+    else if (posicion < 0) return -3;
 
     int res = 0, i= 0;
     struct NodoD* tempA;
@@ -119,7 +119,7 @@ int enlistarListaDobleEn(struct ListaDobleEnlazada* lista, void* valor, int posi
 
 void imprimirListaDoble(struct ListaDobleEnlazada* lista) {
     if (!lista) printf("Error: La lista no debe ser nula");
-    if (!lista->frente) printf("La lista esta vacia");
+    else if (!lista->frente) printf("La lista esta vacia");
 
     struct NodoD* nodo = lista->frente;
 
