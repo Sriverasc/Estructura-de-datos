@@ -73,10 +73,10 @@ int longitud(struct Cola *cola) {
     int l = 0;
 
     struct NodoS *nodo = cola->final;
-    do {
+    while(nodo) {
         l++;
         nodo = nodo->siguiente;
-    } while(nodo);
+    }
 
     return l;
 }
