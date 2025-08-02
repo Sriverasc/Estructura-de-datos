@@ -8,6 +8,7 @@ struct ListaEnlazada {
 
 struct ListaEnlazada* iniciarLista(enum Tipo tipo) {
     struct ListaEnlazada *lista = (struct ListaEnlazada *)malloc(sizeof(struct ListaEnlazada));
+    if (!lista) return NULL;
     lista->frente = NULL;
     lista->final = NULL;
     lista->tipo = validarTipoDato(tipo) ? tipo : Int;
@@ -15,7 +16,7 @@ struct ListaEnlazada* iniciarLista(enum Tipo tipo) {
     return lista;
 }
 
-int agregarInicio(struct ListaEnlazada *lista, void *dato) {
+int enlistarInicio(struct ListaEnlazada *lista, void *dato) {
     if (!lista) return -1;
     if (!dato) return -2;
 
@@ -28,7 +29,7 @@ int agregarInicio(struct ListaEnlazada *lista, void *dato) {
     return 1;
 }
 
-int agregarFinal(struct ListaEnlazada *lista, void *dato) {
+int enlistarFinal(struct ListaEnlazada *lista, void *dato) {
     if (!lista) return -1;
     if (!dato) return -2;
 
@@ -41,7 +42,7 @@ int agregarFinal(struct ListaEnlazada *lista, void *dato) {
     return 1;
 }
 
-int agregarEn(struct ListaEnlazada* lista, void* dato, int pos) {
+int enlistarEn(struct ListaEnlazada* lista, void* dato, int pos) {
     if (!lista) return -1;
     if (!dato) return -2;
 

@@ -7,6 +7,7 @@ struct Pila {
 
 struct Pila* iniciarPila(enum Tipo tipo) {
     struct Pila *pila = (struct Pila *)malloc(sizeof(struct Pila));
+    if (!pila) return NULL;
     pila->cima = NULL;
     pila->tipo = tipo;
 

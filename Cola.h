@@ -8,6 +8,7 @@ struct Cola {
 
 struct Cola* iniciarCola(enum Tipo tipo) {
     struct Cola *cola = (struct Cola *)malloc(sizeof(struct Cola));
+    if (!cola) return NULL;
     cola->frente = NULL;
     cola->final = NULL;
     cola->tipo = tipo;

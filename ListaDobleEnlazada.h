@@ -70,7 +70,8 @@ int enlistarListaDobleFinal(struct ListaDobleEnlazada* lista, void* valor) {
 int enlistarListaDobleEn(struct ListaDobleEnlazada* lista, void* valor, int pos) {
     if (!lista) return -1;
 
-    if (!lista->frente || pos <= 0) enlistarListaDobleInicio(lista, valor);
+    if (!lista->frente || pos == 0) enlistarListaDobleInicio(lista, valor);
+    if (pos == -1) enlistarListaDobleFinal(lista, valor);
 
     struct NodoD* nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
     if (!nodo) return -2;
@@ -100,6 +101,43 @@ int enlistarListaDobleEn(struct ListaDobleEnlazada* lista, void* valor, int pos)
     return 1;
 }
 
+int desenlistarListaDobleInicio(struct ListaDobleEnlazada* lista) {
+    if (!lista) return -1;
+    if (!lista->frente) return -2;
+
+    struct NodoD* temp;
+    struct NodoD* nodo = lista->frente;
+
+    temp = nodo->siguiente;
+    temp->anterior = nodo->anterior;
+
+    lista->final->siguiente = temp;
+    lista->frente = temp;
+
+    free(nodo->dato);
+    free(nodo);
+
+    return 1;
+}
+
+int desenlistarListaDobleFinal(struct ListaDobleEnlazada* lista) {
+    if (!lista) return -1;
+    if (!lista->frente) return -2;
+
+    struct NodoD* temp;
+    struct NodoD* nodo = lista->final;
+
+    temp = nodo->anterior;
+    temp->siguiente = nodo->siguiente;
+
+    lista->frente->anterior = temp;
+    lista->final = temp;
+
+    free(nodo->dato);
+    free(nodo);
+
+    return 1;
+}
 
 void imprimirListaDoble(struct ListaDobleEnlazada* lista) {
     struct NodoD* nodo = lista->frente;
