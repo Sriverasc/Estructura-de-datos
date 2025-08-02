@@ -1,7 +1,7 @@
 #include "Nodo.h"
 
 struct Pila {
-    struct Nodo *cima;
+    struct NodoS *cima;
     enum Tipo tipo;
 };
 
@@ -14,7 +14,7 @@ struct Pila* iniciarPila(enum Tipo tipo) {
 }
 
 int apilar(struct Pila *pila, void *valor) {
-    struct Nodo *nodo = (struct Nodo *)malloc(sizeof(struct Nodo));
+    struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
     if (!nodo) return -1;
 
     enum Tipo tipo = pila->tipo;
@@ -50,7 +50,7 @@ int apilar(struct Pila *pila, void *valor) {
 
 void* desapilar(struct Pila *pila) {
     void *valor;
-    struct Nodo *cima = pila->cima;
+    struct NodoS *cima = pila->cima;
 
     if (!cima) return NULL;
 
@@ -77,7 +77,7 @@ int longitud(struct Pila *pila) {
 
     int l = 0;
 
-    struct Nodo *nodo = pila->cima;
+    struct NodoS *nodo = pila->cima;
     do {
         l++;
         nodo = nodo->siguiente;
@@ -89,7 +89,7 @@ int longitud(struct Pila *pila) {
 int limpiarPila(struct Pila *pila) {
     if (estaVacio(pila)) return 0;
 
-    struct Nodo *nodo;
+    struct NodoS *nodo;
     while (pila->cima != NULL) {
         nodo = pila->cima;
         pila->cima = pila->cima->siguiente;
@@ -115,7 +115,7 @@ int destruir(struct Pila *pila) {
 void mostrar(struct Pila *pila) {
     if(estaVacio(pila)) printf("Pila vacia");
 
-    struct Nodo *nodo = pila->cima;
+    struct NodoS *nodo = pila->cima;
 
     switch (pila->tipo)
     {

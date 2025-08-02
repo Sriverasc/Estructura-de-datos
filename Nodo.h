@@ -2,9 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct Nodo {
+struct NodoS {
     void *dato;
-    struct Nodo *siguiente;
+    struct NodoS *siguiente;
+};
+
+struct NodoD {
+    void *dato;
+    struct NodoD *siguiente;
+    struct NodoD *anterior;
 };
 
 enum Tipo {
@@ -27,7 +33,7 @@ int validarTipoDato(enum Tipo tipo) {
     }
 }
 
-void guardarValor(struct Nodo *nodo, enum Tipo tipo, void *dato) {
+void guardarValor(struct NodoS *nodo, enum Tipo tipo, void *dato) {
     switch(tipo)
     {
     case Int:

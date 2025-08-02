@@ -17,7 +17,6 @@ struct Cola* iniciarCola(enum Tipo tipo) {
 
 int encolar(struct Cola *cola, void* valor) {
     struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
-    struct Nodo *temp;
     if (!nodo) return -1;
 
     enum Tipo tipo = cola->tipo;
