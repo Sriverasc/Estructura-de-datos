@@ -19,28 +19,7 @@ int apilar(struct Pila *pila, void *valor) {
 
     enum Tipo tipo = pila->tipo;
 
-    switch (tipo)
-    {
-    case Int: // Int
-        nodo->dato = malloc(sizeof(int));
-        memcpy(nodo->dato, valor, sizeof(int));
-        break;
-    case Char: // Char
-        nodo->dato = malloc(sizeof(char));
-        memcpy(nodo->dato, valor, sizeof(char));
-        break;
-    case Float: // Float
-        nodo->dato = malloc(sizeof(float));
-        memcpy(nodo->dato, valor, sizeof(float));
-        break;
-    case Double: // Double
-        nodo->dato = malloc(sizeof(double));
-        memcpy(nodo->dato, valor, sizeof(double));
-        break;
-    default:
-        return -2;
-        break;
-    }
+    guardarValor(nodo, pila->tipo, valor);
 
     nodo->siguiente = pila->cima;
     pila->cima = nodo;
@@ -62,7 +41,7 @@ void* desapilar(struct Pila *pila) {
     return valor;
 }
 
-void* tope(struct Pila *pila) {
+void* mostrarTope(struct Pila *pila) {
     return pila->cima->dato;
 }
 
@@ -78,10 +57,10 @@ int longitud(struct Pila *pila) {
     int l = 0;
 
     struct NodoS *nodo = pila->cima;
-    do {
+    while(nodo) {
         l++;
         nodo = nodo->siguiente;
-    } while(nodo);
+    }
 
     return l;
 }
@@ -100,7 +79,7 @@ int limpiarPila(struct Pila *pila) {
     return 1;
 }
 
-int destruir(struct Pila *pila) {
+int liberarPila(struct Pila *pila) {
     if (!pila) {
         free(pila);
         return 1;
@@ -112,37 +91,13 @@ int destruir(struct Pila *pila) {
     return 1;
 }
 
-void mostrar(struct Pila *pila) {
+void imprimirPila(struct Pila *pila) {
     if(estaVacio(pila)) printf("Pila vacia");
 
     struct NodoS *nodo = pila->cima;
 
-    switch (pila->tipo)
-    {
-    case Int:
-        do {
-            printf("%d ", *(int *)nodo->dato);
-            nodo = nodo->siguiente;
-        } while(nodo);
-        break;
-    case Char:
-        
-        do {
-            printf("%c ", *(char *)nodo->dato);
-            nodo = nodo->siguiente;
-        } while(nodo);
-        break;
-    case Float:
-        
-        do {
-            printf("%f ", *(float *)nodo->dato);
-            nodo = nodo->siguiente;
-        } while(nodo);
-    case Double:
-        do {
-            printf("%lf ", *(double *)nodo->dato);
-            nodo = nodo->siguiente;
-        } while(nodo);
-        break;
+    while(nodo) {
+        imprimirValor(nodo->dato, pila->tipo);
+        nodo = nodo->siguiente;
     }
 }
