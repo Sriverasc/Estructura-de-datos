@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "Nodo.h"  // Asumo que aquí está la definición de NodoD, guardarValor y enum Tipo
+#include "Nodo.h"
 
 struct ListaDobleEnlazada {
     struct NodoD* frente;
@@ -11,7 +9,6 @@ struct ListaDobleEnlazada {
 struct ListaDobleEnlazada* iniciarListaDobleEnlazada(enum Tipo tipo) {
     struct ListaDobleEnlazada* lista = (struct ListaDobleEnlazada *)malloc(sizeof(struct ListaDobleEnlazada));
     if (!lista) return NULL;
-
     lista->frente = NULL;
     lista->final = NULL;
     lista->tipo = tipo;
@@ -21,129 +18,31 @@ struct ListaDobleEnlazada* iniciarListaDobleEnlazada(enum Tipo tipo) {
 
 int enlistarListaDobleInicio(struct ListaDobleEnlazada* lista, void* valor) {
     if (!lista) return -1;
+    if (!valor) return -2;
 
-    struct NodoD *nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
-    if (!nodo) return -2;
+    int res = 0;
+    struct NodoD* nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
+    if (!nodo) return -3;
 
-    guardarValor(nodo, 2, lista->tipo, valor);
+    res = guardarValor(nodo, 2, lista->tipo, valor);
+
+    if (res != 1) return -4;
 
     if (!lista->frente) {
-        // Lista vacía: nodo apunta a sí mismo (circular)
         nodo->anterior = nodo;
         nodo->siguiente = nodo;
+
         lista->frente = nodo;
         lista->final = nodo;
     } else {
         nodo->siguiente = lista->frente;
         nodo->anterior = lista->final;
 
-        lista->frente->anterior = nodo;
         lista->final->siguiente = nodo;
+        lista->frente->anterior = nodo;
 
         lista->frente = nodo;
     }
 
     return 1;
-}
-
-int enlistarListaDobleFinal(struct ListaDobleEnlazada* lista, void* valor) {
-    if (!lista) return -1;
-
-    if (!lista->final) return enlistarListaDobleInicio(lista, valor);
-
-    struct NodoD *nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
-    if (!nodo) return -2;
-
-    guardarValor(nodo, 2, lista->tipo, valor);
-
-    nodo->anterior = lista->final;
-    nodo->siguiente = lista->frente;
-
-    lista->frente->anterior = nodo;
-    lista->final->siguiente = nodo;
-
-    lista->final = nodo;
-
-    return 1;
-}
-
-int enlistarListaDobleEn(struct ListaDobleEnlazada* lista, void* valor, int pos) {
-    if (!lista) return -1;
-
-    if (!lista->frente || pos == 0) enlistarListaDobleInicio(lista, valor);
-    if (pos == -1) enlistarListaDobleFinal(lista, valor);
-
-    struct NodoD* nodo = (struct NodoD *)malloc(sizeof(struct NodoD));
-    if (!nodo) return -2;
-
-    guardarValor(nodo, 2, lista->tipo, valor);
-
-    struct NodoD* actual = lista->frente;
-    int i = 0;
-
-    while (i < pos - 1 && actual->siguiente != lista->frente) {
-        actual = actual->siguiente;
-        i++;
-    }
-
-    struct NodoD* siguiente = actual->siguiente;
-
-    nodo->siguiente = siguiente;
-    nodo->anterior = actual;
-
-    actual->siguiente = nodo;
-    siguiente->anterior = nodo;
-
-    if (actual == lista->final) {
-        lista->final = nodo;
-    }
-
-    return 1;
-}
-
-int desenlistarListaDobleInicio(struct ListaDobleEnlazada* lista) {
-    if (!lista) return -1;
-    if (!lista->frente) return -2;
-
-    struct NodoD* temp;
-    struct NodoD* nodo = lista->frente;
-
-    temp = nodo->siguiente;
-    temp->anterior = nodo->anterior;
-
-    lista->final->siguiente = temp;
-    lista->frente = temp;
-
-    free(nodo->dato);
-    free(nodo);
-
-    return 1;
-}
-
-int desenlistarListaDobleFinal(struct ListaDobleEnlazada* lista) {
-    if (!lista) return -1;
-    if (!lista->frente) return -2;
-
-    struct NodoD* temp;
-    struct NodoD* nodo = lista->final;
-
-    temp = nodo->anterior;
-    temp->siguiente = nodo->siguiente;
-
-    lista->frente->anterior = temp;
-    lista->final = temp;
-
-    free(nodo->dato);
-    free(nodo);
-
-    return 1;
-}
-
-void imprimirListaDoble(struct ListaDobleEnlazada* lista) {
-    struct NodoD* nodo = lista->frente;
-
-    while(nodo->siguiente != lista->frente) {
-        imprimirValor(nodo->dato, lista->tipo);
-        nodo = nodo->siguiente;
-    }
 }

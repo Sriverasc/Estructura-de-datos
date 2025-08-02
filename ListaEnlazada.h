@@ -60,16 +60,13 @@ int enlistarEn(struct ListaEnlazada* lista, void* dato, int pos) {
     
     if (pos > 0 ) {
         struct NodoS *temp = lista->frente;
-        while(temp) {
-            if (i == (pos - 1)) {
-                nodo->siguiente = temp->siguiente;
-                temp->siguiente = nodo;
-                break;
-            } else {
-                i++;
-                temp = temp->siguiente;
-            }
+        while(i < (pos - 1) && temp) {
+            i++;
+            temp = temp->siguiente;
         }
+
+        nodo->siguiente = temp->siguiente;
+        temp->siguiente = nodo;
     } else {
         return -4;
     }
@@ -106,25 +103,27 @@ void* desenlistarFinal(struct ListaEnlazada *lista) {
 }
 
 void* desenlistarEn(struct ListaEnlazada *lista, int pos) {
-    if (pos < 0) return NULL;
+    if (!lista) return NULL;
+    if (!lista->frente) return NULL;
+    if (pos < -1) return NULL;
+    if (pos == 0) return desenlistarInicio(lista);
+    if (pos == -1) return desenlistarFinal(lista);
 
     int i = 0;
     void *valor;
     struct NodoS *temp;
     struct NodoS *nodo = lista->frente;
-    while(nodo) {
-        if (i == (pos - 1)) {
-            temp = nodo->siguiente;
-            nodo->siguiente = temp->siguiente;
-            valor = temp->dato;
-
-            free(temp);
-            return valor;
-        } else {
-            i++;
-            nodo = nodo->siguiente;
-        }
+    
+    while(i < (pos - 1) && nodo) {
+        i++;
+        nodo = nodo->siguiente;
     }
+
+    temp = nodo->siguiente;
+    nodo->siguiente = temp->siguiente;
+    valor = temp->dato;
+
+    free(temp);
 
     return NULL;
 }

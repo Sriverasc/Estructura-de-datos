@@ -33,31 +33,75 @@ int validarTipoDato(enum Tipo tipo) {
     }
 }
 
-void guardarValor(void *nodo, int tipoNodo, enum Tipo tipo, void *dato) {
-    if (tipoNodo == 1) {
-        struct NodoS *ns = (struct NodoS *)nodo;
-    } else if (tipoNodo == 2) {
-        struct NodoD *nd = (struct NodoD *)nodo;
-    }
-    
-    switch(tipo)
+int guardarEnNodoS(struct NodoS* temp, enum Tipo tipo, void *dato) {
+    switch (tipo)
     {
     case Int:
-        ((struct NodoS *)nodo)->dato = malloc(sizeof(int));
-        memcpy(((struct NodoS *)nodo)->dato, dato, sizeof(int));
+        temp->dato = malloc(sizeof(int));
+        if (temp->dato) return -1;
+        memcpy(temp->dato, dato, sizeof(int));
         break;
     case Char:
-        ((struct NodoS *)nodo)->dato = malloc(sizeof(char));
-        memcpy(((struct NodoS *)nodo)->dato, dato, sizeof(char));
+        temp->dato = malloc(sizeof(char));
+        if (temp->dato) return -1;
+        memcpy(temp->dato, dato, sizeof(char));
         break;
-    case Float:
-        ((struct NodoS *)nodo)->dato = malloc(sizeof(float));
-        memcpy(((struct NodoS *)nodo)->dato, dato, sizeof(float));
-        break;
+    case Float: 
+        temp->dato = malloc(sizeof(float));
+        if (temp->dato) return -1;
+        memcpy(temp->dato, dato, sizeof(float));
     case Double:
-        ((struct NodoS *)nodo)->dato = malloc(sizeof(double));
-        memcpy(((struct NodoS *)nodo)->dato, dato, sizeof(double));
+        temp->dato = malloc(sizeof(double));
+        if (temp->dato) return -1;
+        memcpy(temp->dato, dato, sizeof(double));
         break;
+    default:
+        return -2;
+        break;
+    }
+
+    return 1;
+}
+
+int guardarEnNodoD(struct NodoD* temp, enum Tipo tipo, void *dato) {
+    switch (tipo)
+    {
+    case Int:
+        temp->dato = malloc(sizeof(int));
+        if (temp->dato) return -1;
+        memcpy(temp->dato, dato, sizeof(int));
+        break;
+    case Char:
+        temp->dato = malloc(sizeof(char));
+        if (temp->dato) return -1;
+        memcpy(temp->dato, dato, sizeof(char));
+        break;
+    case Float: 
+        temp->dato = malloc(sizeof(float));
+        if (temp->dato) return -1;
+        memcpy(temp->dato, dato, sizeof(float));
+    case Double:
+        temp->dato = malloc(sizeof(double));
+        if (temp->dato) return -1;
+        memcpy(temp->dato, dato, sizeof(double));
+        break;
+    default:
+        return -2;
+        break;
+    }
+
+    return 1;
+}
+
+int guardarValor(void *nodo, int tipoNodo, enum Tipo tipo, void *dato) {
+    if (tipoNodo == 1) {
+        struct NodoS *ns = (struct NodoS *)nodo;
+        return guardarEnNodoS(ns, tipo, dato);
+    } else if (tipoNodo == 2) {
+        struct NodoD *nd = (struct NodoD *)nodo;
+        return guardarEnNodoD(nd, tipo, dato);
+    } else {
+        return -3;    
     }
 }
 
