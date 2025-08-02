@@ -21,7 +21,7 @@ int encolar(struct Cola *cola, void* valor) {
 
     enum Tipo tipo = cola->tipo;
 
-    guardarValor(nodo, cola->tipo, valor);
+    guardarValor(nodo, 1, cola->tipo, valor);
 
     nodo->siguiente = NULL;
 

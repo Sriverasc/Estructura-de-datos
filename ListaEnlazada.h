@@ -20,7 +20,7 @@ int agregarInicio(struct ListaEnlazada *lista, void *dato) {
     if (!dato) return -2;
 
     struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
-    guardarValor(nodo, lista->tipo, dato);
+    guardarValor(nodo, 1, lista->tipo, dato);
     nodo->siguiente = lista->frente;
     lista->frente = nodo;
     lista->final = !lista->final ? lista->frente : lista->final;
@@ -33,7 +33,7 @@ int agregarFinal(struct ListaEnlazada *lista, void *dato) {
     if (!dato) return -2;
 
     struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
-    guardarValor(nodo, lista->tipo, dato);
+    guardarValor(nodo, 1, lista->tipo, dato);
     nodo->siguiente = NULL;
     lista->final->siguiente = nodo;
     lista->final = nodo;
@@ -54,7 +54,7 @@ int agregarEn(struct ListaEnlazada* lista, void* dato, int pos) {
     int i = 0;
     struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
     
-    guardarValor(nodo, lista->tipo, dato);
+    guardarValor(nodo, 1, lista->tipo, dato);
     nodo->siguiente = NULL;
     
     if (pos > 0 ) {

@@ -19,7 +19,7 @@ int apilar(struct Pila *pila, void *valor) {
 
     enum Tipo tipo = pila->tipo;
 
-    guardarValor(nodo, pila->tipo, valor);
+    guardarValor(nodo, 1, pila->tipo, valor);
 
     nodo->siguiente = pila->cima;
     pila->cima = nodo;
