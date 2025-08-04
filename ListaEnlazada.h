@@ -1,13 +1,13 @@
 #include "Nodo.h"
 
-struct ListaEnlazada {
-    struct NodoS *frente;
-    struct NodoS *final;
+typedef struct ListaEnlazada {
+    NodoS *frente;
+    NodoS *final;
     enum Tipo tipo;
-};
+} ListaEnlazada;
 
-struct ListaEnlazada* iniciarLista(enum Tipo tipo) {
-    struct ListaEnlazada *lista = (struct ListaEnlazada *)malloc(sizeof(struct ListaEnlazada));
+ListaEnlazada* iniciarLista(enum Tipo tipo) {
+    ListaEnlazada *lista = (ListaEnlazada *)malloc(sizeof(ListaEnlazada));
     if (!lista) return NULL;
     lista->frente = NULL;
     lista->final = NULL;
@@ -16,11 +16,11 @@ struct ListaEnlazada* iniciarLista(enum Tipo tipo) {
     return lista;
 }
 
-int enlistarInicio(struct ListaEnlazada *lista, void *dato) {
+int enlistarInicio(ListaEnlazada *lista, void *dato) {
     if (!lista) return -1;
     if (!dato) return -2;
 
-    struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
+    NodoS *nodo = (NodoS *)malloc(sizeof(NodoS));
     guardarValor(nodo, 1, lista->tipo, dato);
     nodo->siguiente = lista->frente;
     lista->frente = nodo;
@@ -29,11 +29,11 @@ int enlistarInicio(struct ListaEnlazada *lista, void *dato) {
     return 1;
 }
 
-int enlistarFinal(struct ListaEnlazada *lista, void *dato) {
+int enlistarFinal(ListaEnlazada *lista, void *dato) {
     if (!lista) return -1;
     if (!dato) return -2;
 
-    struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
+    NodoS *nodo = (NodoS *)malloc(sizeof(NodoS));
     guardarValor(nodo, 1, lista->tipo, dato);
     nodo->siguiente = NULL;
     lista->final->siguiente = nodo;
@@ -42,24 +42,24 @@ int enlistarFinal(struct ListaEnlazada *lista, void *dato) {
     return 1;
 }
 
-int enlistarEn(struct ListaEnlazada* lista, void* dato, int pos) {
+int enlistarEn(ListaEnlazada* lista, void* dato, int pos) {
     if (!lista) return -1;
     if (!dato) return -2;
 
     if (!lista->frente || pos == 0) {
-        return agregarInicio(lista, dato);
+        return enlistarInicio(lista, dato);
     } else if (pos == -1) {
-        return agregarFinal(lista, dato);
+        return enlistarFinal(lista, dato);
     }
     
     int i = 0;
-    struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
+    NodoS *nodo = (NodoS *)malloc(sizeof(NodoS));
     
     guardarValor(nodo, 1, lista->tipo, dato);
     nodo->siguiente = NULL;
     
     if (pos > 0 ) {
-        struct NodoS *temp = lista->frente;
+        NodoS *temp = lista->frente;
         while(i < (pos - 1) && temp) {
             i++;
             temp = temp->siguiente;
@@ -74,10 +74,10 @@ int enlistarEn(struct ListaEnlazada* lista, void* dato, int pos) {
     return 0;
 }
 
-void* desenlistarInicio(struct ListaEnlazada *lista) {
+void* desenlistarInicio(ListaEnlazada *lista) {
     if (!lista->frente) return NULL;
     
-    struct NodoS *nodo = lista->frente;
+    NodoS *nodo = lista->frente;
     void *valor = nodo->dato;
     lista->frente = nodo->siguiente;
 
@@ -85,10 +85,10 @@ void* desenlistarInicio(struct ListaEnlazada *lista) {
     return valor;
 }
 
-void* desenlistarFinal(struct ListaEnlazada *lista) {
+void* desenlistarFinal(ListaEnlazada *lista) {
     if (!lista->final) return NULL;
 
-    struct NodoS *nodo = lista->frente;
+    NodoS *nodo = lista->frente;
     while(nodo->siguiente != lista->final) {
         nodo = nodo->siguiente;
     }
@@ -102,7 +102,7 @@ void* desenlistarFinal(struct ListaEnlazada *lista) {
     return valor;
 }
 
-void* desenlistarEn(struct ListaEnlazada *lista, int pos) {
+void* desenlistarEn(ListaEnlazada *lista, int pos) {
     if (!lista) return NULL;
     if (!lista->frente) return NULL;
     if (pos < -1) return NULL;
@@ -111,8 +111,8 @@ void* desenlistarEn(struct ListaEnlazada *lista, int pos) {
 
     int i = 0;
     void *valor;
-    struct NodoS *temp;
-    struct NodoS *nodo = lista->frente;
+    NodoS *temp;
+    NodoS *nodo = lista->frente;
     
     while(i < (pos - 1) && nodo) {
         i++;
@@ -128,11 +128,11 @@ void* desenlistarEn(struct ListaEnlazada *lista, int pos) {
     return NULL;
 }
 
-int longitudLista(struct ListaEnlazada *lista) {
+int longitudLista(ListaEnlazada *lista) {
     if (!lista) return -1;
     int i = 0;
 
-    struct NodoS *nodo = lista->frente;
+    NodoS *nodo = lista->frente;
     while(nodo) {
         i++;
         nodo = nodo->siguiente;
@@ -141,20 +141,20 @@ int longitudLista(struct ListaEnlazada *lista) {
     return i;
 }
 
-void* mostrarInicio(struct ListaEnlazada *lista) {
+void* mostrarInicio(ListaEnlazada *lista) {
     return lista->frente->dato;
 }
 
-void* mostrarFinal(struct ListaEnlazada *lista) {
+void* mostrarFinal(ListaEnlazada *lista) {
     return lista->final->dato;
 } 
 
-void* mostrarPosicion(struct ListaEnlazada *lista, int pos) {
+void* mostrarPosicion(ListaEnlazada *lista, int pos) {
     if (pos == 0) return mostrarInicio(lista);
     if (pos == -1) return mostrarFinal(lista);
 
     int i = 0;
-    struct NodoS *nodo = lista->frente;
+    NodoS *nodo = lista->frente;
     while(nodo) {
         if (i == pos) {
             return nodo->dato;
@@ -165,8 +165,8 @@ void* mostrarPosicion(struct ListaEnlazada *lista, int pos) {
     }
 }
 
-void imprimirLista(struct ListaEnlazada *lista) {
-    struct NodoS *nodo = lista->frente;
+void imprimirLista(ListaEnlazada *lista) {
+    NodoS *nodo = lista->frente;
 
     while(nodo) {
         imprimirValor(nodo->dato, lista->tipo);
@@ -174,10 +174,10 @@ void imprimirLista(struct ListaEnlazada *lista) {
     }
 }
 
-int limpiarLista(struct ListaEnlazada *lista) {
+int limpiarLista(ListaEnlazada *lista) {
     if (!lista) return -1;
     
-    struct NodoS *nodo = lista->frente;
+    NodoS *nodo = lista->frente;
 
     while(lista->frente) {
         nodo = lista->frente;
@@ -190,7 +190,7 @@ int limpiarLista(struct ListaEnlazada *lista) {
     return 1;
 }
 
-int liberarLista(struct ListaEnlazada *lista) {
+int liberarLista(ListaEnlazada *lista) {
     int limpia = limpiarLista(lista);
 
     if (limpia > 0) {

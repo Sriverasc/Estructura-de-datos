@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "nodo.h": "c",
+        "listadobleenlazada.h": "c"
+    }
+}

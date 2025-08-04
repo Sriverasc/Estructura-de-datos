@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct NodoS {
+typedef struct NodoS {
     void *dato;
     struct NodoS *siguiente;
-};
+} NodoS;
 
-struct NodoD {
+typedef struct NodoD {
     void *dato;
     struct NodoD *siguiente;
     struct NodoD *anterior;
-};
+} NodoD;
 
 enum Tipo {
     Int,
@@ -33,7 +33,7 @@ int validarTipoDato(enum Tipo tipo) {
     }
 }
 
-int guardarEnNodoS(struct NodoS* temp, enum Tipo tipo, void *dato) {
+int guardarEnNodoS(NodoS* temp, enum Tipo tipo, void *dato) {
     switch (tipo)
     {
     case Int:
@@ -63,7 +63,7 @@ int guardarEnNodoS(struct NodoS* temp, enum Tipo tipo, void *dato) {
     return 1;
 }
 
-int guardarEnNodoD(struct NodoD* temp, enum Tipo tipo, void *dato) {
+int guardarEnNodoD(NodoD* temp, enum Tipo tipo, void *dato) {
     switch (tipo)
     {
     case Int:
@@ -95,10 +95,10 @@ int guardarEnNodoD(struct NodoD* temp, enum Tipo tipo, void *dato) {
 
 int guardarValor(void *nodo, int tipoNodo, enum Tipo tipo, void *dato) {
     if (tipoNodo == 1) {
-        struct NodoS *ns = (struct NodoS *)nodo;
+        NodoS *ns = (NodoS *)nodo;
         return guardarEnNodoS(ns, tipo, dato);
     } else if (tipoNodo == 2) {
-        struct NodoD *nd = (struct NodoD *)nodo;
+        NodoD *nd = (NodoD *)nodo;
         return guardarEnNodoD(nd, tipo, dato);
     } else {
         return -3;    

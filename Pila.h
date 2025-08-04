@@ -1,12 +1,12 @@
 #include "Nodo.h"
 
-struct Pila {
-    struct NodoS *cima;
+typedef struct Pila {
+    NodoS *cima;
     enum Tipo tipo;
-};
+} Pila;
 
-struct Pila* iniciarPila(enum Tipo tipo) {
-    struct Pila *pila = (struct Pila *)malloc(sizeof(struct Pila));
+Pila* iniciarPila(enum Tipo tipo) {
+    Pila *pila = (Pila *)malloc(sizeof(Pila));
     if (!pila) return NULL;
     pila->cima = NULL;
     pila->tipo = tipo;
@@ -14,8 +14,8 @@ struct Pila* iniciarPila(enum Tipo tipo) {
     return  pila;
 }
 
-int apilar(struct Pila *pila, void *valor) {
-    struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
+int apilar(Pila *pila, void *valor) {
+    NodoS *nodo = ( NodoS *)malloc(sizeof( NodoS));
     if (!nodo) return -1;
 
     enum Tipo tipo = pila->tipo;
@@ -28,9 +28,9 @@ int apilar(struct Pila *pila, void *valor) {
     return 0;
 }
 
-void* desapilar(struct Pila *pila) {
+void* desapilar( Pila *pila) {
     void *valor;
-    struct NodoS *cima = pila->cima;
+    NodoS *cima = pila->cima;
 
     if (!cima) return NULL;
 
@@ -42,22 +42,22 @@ void* desapilar(struct Pila *pila) {
     return valor;
 }
 
-void* mostrarTope(struct Pila *pila) {
+void* mostrarTope( Pila *pila) {
     return pila->cima->dato;
 }
 
-int estaVacio(struct Pila *pila) {
+int estaVacio( Pila *pila) {
     if (pila->cima) return 0;
 
     return 1;
 }
 
-int longitud(struct Pila *pila) {
+int longitud( Pila *pila) {
     if (!pila->cima) return 0;
 
     int l = 0;
 
-    struct NodoS *nodo = pila->cima;
+    NodoS *nodo = pila->cima;
     while(nodo) {
         l++;
         nodo = nodo->siguiente;
@@ -66,10 +66,10 @@ int longitud(struct Pila *pila) {
     return l;
 }
 
-int limpiarPila(struct Pila *pila) {
+int limpiarPila( Pila *pila) {
     if (estaVacio(pila)) return 0;
 
-    struct NodoS *nodo;
+    NodoS *nodo;
     while (pila->cima != NULL) {
         nodo = pila->cima;
         pila->cima = pila->cima->siguiente;
@@ -80,7 +80,7 @@ int limpiarPila(struct Pila *pila) {
     return 1;
 }
 
-int liberarPila(struct Pila *pila) {
+int liberarPila( Pila *pila) {
     if (!pila) {
         free(pila);
         return 1;
@@ -92,10 +92,10 @@ int liberarPila(struct Pila *pila) {
     return 1;
 }
 
-void imprimirPila(struct Pila *pila) {
+void imprimirPila( Pila *pila) {
     if(estaVacio(pila)) printf("Pila vacia");
 
-    struct NodoS *nodo = pila->cima;
+    NodoS *nodo = pila->cima;
 
     while(nodo) {
         imprimirValor(nodo->dato, pila->tipo);

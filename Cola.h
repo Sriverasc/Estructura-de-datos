@@ -1,13 +1,13 @@
 #include "Nodo.h"
 
-struct Cola {
-    struct NodoS *final;
-    struct NodoS *frente;
+typedef struct Cola {
+    NodoS *final;
+    NodoS *frente;
     enum Tipo tipo;
-};
+} Cola;
 
-struct Cola* iniciarCola(enum Tipo tipo) {
-    struct Cola *cola = (struct Cola *)malloc(sizeof(struct Cola));
+Cola* iniciarCola(enum Tipo tipo) {
+    Cola *cola = (Cola *)malloc(sizeof(Cola));
     if (!cola) return NULL;
     cola->frente = NULL;
     cola->final = NULL;
@@ -16,8 +16,8 @@ struct Cola* iniciarCola(enum Tipo tipo) {
     return cola;
 }
 
-int encolar(struct Cola *cola, void* valor) {
-    struct NodoS *nodo = (struct NodoS *)malloc(sizeof(struct NodoS));
+int encolar(Cola *cola, void* valor) {
+    NodoS *nodo = (NodoS *)malloc(sizeof(NodoS));
     if (!nodo) return -1;
 
     enum Tipo tipo = cola->tipo;
@@ -38,11 +38,11 @@ int encolar(struct Cola *cola, void* valor) {
     return 0;
 }
 
-void* desencolar(struct Cola *cola) {
+void* desencolar(Cola *cola) {
     if (!cola || cola->frente == NULL) 
         return NULL;
 
-    struct NodoS *nodo = cola->frente;
+    NodoS *nodo = cola->frente;
     void *valor = nodo->dato;
 
     cola->frente = nodo->siguiente;
@@ -56,24 +56,24 @@ void* desencolar(struct Cola *cola) {
     return valor; 
 }
 
-void* mostrarFrente(struct Cola *cola) {
+void* mostrarFrente(Cola *cola) {
     if (!cola) return NULL;
 
     return cola->frente->dato;
 }
 
-int estaVacia(struct Cola *cola) {
+int estaVacia(Cola *cola) {
     if (!cola->final) return 1;
 
     return 0;
 }
 
-int longitud(struct Cola *cola) {
+int longitud(Cola *cola) {
     if (!cola->final) return 0;
 
     int l = 0;
 
-    struct NodoS *nodo = cola->final;
+    NodoS *nodo = cola->final;
     while(nodo) {
         l++;
         nodo = nodo->siguiente;
@@ -82,10 +82,10 @@ int longitud(struct Cola *cola) {
     return l;
 }
 
-int limpiarCola(struct Cola *cola) {
+int limpiarCola(Cola *cola) {
     if (estaVacia(cola)) return 0;
 
-    struct NodoS *nodo;
+    NodoS *nodo;
     while(nodo->siguiente != NULL) {
         nodo = cola->frente;
         cola->frente = nodo->siguiente;
@@ -100,7 +100,7 @@ int limpiarCola(struct Cola *cola) {
     return 1;
 }
 
-int liberarCola(struct Cola *cola) {
+int liberarCola(Cola *cola) {
     if (estaVacia(cola)) {
         free(cola);
         return 1;
@@ -112,10 +112,10 @@ int liberarCola(struct Cola *cola) {
     return 1;
 }
 
-void imprimirCola(struct Cola *cola) {
+void imprimirCola(Cola *cola) {
     if(estaVacia(cola)) printf("La cola esta vacia\n");
 
-    struct NodoS *nodo = cola->frente;
+    NodoS *nodo = cola->frente;
 
     while(nodo) {
         imprimirValor(nodo->dato, cola->tipo);
