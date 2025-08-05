@@ -195,6 +195,24 @@ void* desenlistarListaDobleEn(ListaDobleEnlazada* lista, int posicion) {
     return NULL;
 }
 
+int longitudListaDoble(ListaDobleEnlazada* lista) {
+    if (!lista) {
+        return -1;
+    } else if (!lista->frente) {
+        return 0;
+    } 
+
+    int i = 0;
+    NodoD* nodo = lista->frente;
+
+    do {
+        i++;
+        nodo = nodo->siguiente;
+    } while(nodo != lista->frente);
+
+    return i;
+}
+
 void imprimirListaDoble(ListaDobleEnlazada* lista) {
     if (!lista) {
         printf("Error: La lista no debe ser nula");
