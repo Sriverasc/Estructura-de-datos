@@ -62,7 +62,7 @@ int enlistarListaDobleFinal(ListaDobleEnlazada* lista, void* valor) {
     res = guardarValor(nodo, 2, lista->tipo, valor);
 
     if (res != 1) {
-        printf("Error al guardar el dato: %d", res);
+        printf("Error al guardar el dato: %d\n", res);
         return -4;
     }
 
@@ -213,13 +213,42 @@ int longitudListaDoble(ListaDobleEnlazada* lista) {
     return i;
 }
 
+int limpiarListaDoble(ListaDobleEnlazada* lista) {
+    if (!lista || !lista->frente) return -1;
+
+    NodoD* actual = lista->frente;
+    NodoD* siguiente;
+    
+    do {
+        siguiente = actual->siguiente;
+        free(actual->dato);
+        free(actual);
+        actual = siguiente;
+    } while (actual != lista->frente);
+
+    lista->frente = NULL;
+    lista->final = NULL;
+
+    return 1;
+}
+
+int liberarListaDoble(ListaDobleEnlazada* lista) {
+    if (!lista || !lista->frente) return -1;
+
+    limpiarListaDoble(lista);
+
+    free(lista);
+
+    return 1;
+}
+
 void imprimirListaDoble(ListaDobleEnlazada* lista) {
     if (!lista) {
-        printf("Error: La lista no debe ser nula");
+        printf("Error: La lista no debe ser nula\n");
         return;
     }
     else if (!lista->frente) {
-        printf("La lista esta vacia");
+        printf("La lista esta vacia\n");
         return;
     }
 
